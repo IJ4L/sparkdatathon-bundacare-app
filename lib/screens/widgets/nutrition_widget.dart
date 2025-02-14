@@ -33,7 +33,7 @@ class NutritionSquareWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColor.primary.withOpacity(0.4),
+              color: AppColor.primary.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(6),
             ),
             child: CustomSvgPicture(
@@ -90,7 +90,7 @@ class NutritionDetailSquareWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColor.primary.withOpacity(0.1),
+        color: AppColor.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -159,7 +159,7 @@ class NutritionBlocWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColor.primary.withOpacity(0.4),
+              color: AppColor.primary.withValues(),
               borderRadius: BorderRadius.circular(6),
             ),
             child: CustomSvgPicture(
@@ -207,7 +207,7 @@ class NutritionBlocWidget extends StatelessWidget {
           const Spacer(),
           CircularProgressIndicator(
             value: 0.7,
-            backgroundColor: AppColor.grey.withOpacity(0.2),
+            backgroundColor: AppColor.grey.withValues(alpha: 0.3),
             valueColor: const AlwaysStoppedAnimation<Color>(AppColor.primary),
             semanticsLabel: 'Linear progress indicator',
           ),

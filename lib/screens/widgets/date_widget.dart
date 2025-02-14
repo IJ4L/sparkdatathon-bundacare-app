@@ -29,7 +29,7 @@ class DateWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: AppColor.primary.withOpacity(0.4),
+              color: AppColor.primary.withValues(alpha: 0.1),
               width: 1,
             ),
           ),

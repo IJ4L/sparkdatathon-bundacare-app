@@ -3,6 +3,7 @@ import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
+import 'package:bundacare/utils/router/router_path.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,6 @@ class AppLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final int selected = navigationShell.currentIndex;
     return Scaffold(
-      // resizeToAvoidBottomInset: true,
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         elevation: 12,
@@ -88,7 +88,44 @@ class AppLayout extends StatelessWidget {
                     height: 20,
                     color: AppColor.white,
                   ),
-                  onPressed: () => {_goBranch(2)},
+                  onPressed: () => {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          padding: const EdgeInsets.all(16),
+                          height: 200,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: AppColor.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              scanButton(
+                                title: AppID.cameraButton,
+                                icon: AppIcon.cameraIcon,
+                                onPressed: () {
+                                  context.goNamed(RouterPath.cameraPreview);
+                                  context.pop();
+                                },
+                              ),
+                              const SizedBox(width: 16),
+                              scanButton(
+                                title: AppID.galleryButton,
+                                icon: AppIcon.galleryIcon,
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  },
                 ),
               ),
               Text(
@@ -100,6 +137,42 @@ class AppLayout extends StatelessWidget {
               const SizedBox(height: 2),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Expanded scanButton({
+    required String title,
+    required String icon,
+    required Function()? onPressed,
+  }) {
+    return Expanded(
+      child: IconButton(
+        onPressed: onPressed,
+        style: IconButton.styleFrom(
+          backgroundColor: AppColor.primary.withValues(
+            alpha: 0.3,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        icon: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomSvgPicture(
+              assetName: icon,
+              height: 38,
+              color: AppColor.black,
+            ),
+            Text(
+              title,
+              style: AppTypography.regular.copyWith(
+                color: AppColor.black,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -12,7 +12,7 @@ class CustomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 14, left: 20, right: 20, bottom: 20),
+      padding: const EdgeInsets.only(top: 14, left: 20, right: 20, bottom: 12),
       child: Column(
         children: [
           Row(

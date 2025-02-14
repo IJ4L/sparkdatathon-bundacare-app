@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: AppColor.primary.withOpacity(0.4),
+                    color: AppColor.primary.withValues(alpha: 0.04),
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
                   return NutritionSquareWidget(index: index);
                 },
                 separatorBuilder: (context, index) {
-                  return const SizedBox(width: 16);
+                  return const SizedBox(width: 12);
                 },
                 itemCount: 4,
               ),
@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
                   return ConsumingWidget(index: index);
                 },
                 separatorBuilder: (context, index) {
-                  return const SizedBox(height: 16);
+                  return const SizedBox(height: 12);
                 },
                 itemCount: 10,
               ),

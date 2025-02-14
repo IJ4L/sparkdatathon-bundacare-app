@@ -1,6 +1,8 @@
 import 'package:bundacare/screens/app_layout.dart';
+import 'package:bundacare/screens/camera/camera_preview.dart';
 import 'package:bundacare/screens/chat_page.dart';
 import 'package:bundacare/screens/detail_consuming_page.dart';
+import 'package:bundacare/screens/detail_education.dart';
 import 'package:bundacare/screens/detail_nutrition_page.dart';
 import 'package:bundacare/screens/education_page.dart';
 import 'package:bundacare/screens/home_page.dart';
@@ -107,6 +109,15 @@ final GoRouter router = GoRouter(
               pageBuilder: (context, state) {
                 return const NoTransitionPage(child: EducationPage());
               },
+              routes: [
+                GoRoute(
+                  path: RouterPath.detailEducation,
+                  name: RouterPath.detailEducation,
+                  pageBuilder: (context, state) {
+                    return const NoTransitionPage(child: DetailEducation());
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -123,6 +134,13 @@ final GoRouter router = GoRouter(
           ],
         )
       ],
+    ),
+    GoRoute(
+      path: RouterPath.cameraPreview,
+      name: RouterPath.cameraPreview,
+      pageBuilder: (context, state) {
+        return const NoTransitionPage(child: CameraPreviewPage());
+      },
     ),
   ],
 );

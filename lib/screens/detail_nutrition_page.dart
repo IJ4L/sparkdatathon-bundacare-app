@@ -39,7 +39,9 @@ class _DetailNutritionPageState extends State<DetailNutritionPage> {
     var date = getAllDate();
 
     return Scaffold(
-      appBar: appbarWidget(context, 'Riwayat'),
+      appBar: appbarWidget(context, 'Riwayat', () {
+        Navigator.pop(context);
+      }),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [

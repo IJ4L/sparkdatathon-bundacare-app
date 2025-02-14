@@ -9,4 +9,7 @@ class RouterPath {
   static const String education = '/education';
   static const String detailNutrition = '/detailNutrition';
   static const String detailConsuming = '/detailConsuming';
+  static const String detailEducation = '/detailEducation';
+  static const String cameraPreview = '/cameraPreview';
+  
 }

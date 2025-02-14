@@ -20,6 +20,10 @@ class AppID {
   static const String fatText = 'Lemak';
   static const String carbohydrateText = 'Karbohidrat';
   static const String consumingText = 'Konsumsi Harian';
+  static const String cameraButton = 'Camera';
+  static const String galleryButton = 'Gallery';
+  static const String hintTextfield = 'Ketik pesan...';
+  static const String helperTextfield = 'Apa yang ingin kamu tanyakan?';
 }
 
 class AppIcon {
@@ -41,6 +45,8 @@ class AppIcon {
   static const String clockIcon = 'assets/icons/ic_time.svg';
   static const String backIcon = 'assets/icons/ic_arrow_left.svg';
   static const String sendIcon = 'assets/icons/ic_send.svg';
+  static const String cameraIcon = 'assets/icons/ic_camera.svg';
+  static const String galleryIcon = 'assets/icons/ic_gallery.svg';
 }
 
 class AppImages {

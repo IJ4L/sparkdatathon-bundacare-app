@@ -62,13 +62,13 @@ class _ChatPageState extends State<ChatPage> {
                     cursorColor: AppColor.black,
                     style: AppTypography.light.copyWith(color: AppColor.black),
                     decoration: InputDecoration(
-                      labelText: 'Ketik Pesan',
+                      labelText: AppID.hintTextfield,
                       labelStyle: AppTypography.light.copyWith(
                         color: AppColor.black,
                         fontSize: AppTypographySize.body4,
                       ),
                       filled: true,
-                      fillColor: AppColor.primary.withOpacity(0.08),
+                      fillColor: AppColor.primary.withValues(alpha: 0.08),
                       suffixIcon: BlocBuilder<ChatButtonCubit, bool>(
                         builder: (context, state) {
                           return Padding(
@@ -98,7 +98,7 @@ class _ChatPageState extends State<ChatPage> {
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
-                      helperText: "Apa yang ingin kamu tanyakan?",
+                      helperText: AppID.helperTextfield,
                       helperStyle: AppTypography.light.copyWith(
                         color: AppColor.black,
                       ),

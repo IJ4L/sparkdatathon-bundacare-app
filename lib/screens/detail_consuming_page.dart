@@ -12,7 +12,9 @@ class DetailConsumingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarWidget(context, 'Konsumsi'),
+      appBar: appbarWidget(context, 'Konsumsi', () {
+        Navigator.pop(context);
+      }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

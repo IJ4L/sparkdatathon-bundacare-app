@@ -44,7 +44,7 @@ class NavDetailWidget extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    foregroundColor: AppColor.primary.withOpacity(0.5),
+                    foregroundColor: AppColor.primary.withValues(alpha: 0.8),
                   ),
                   child: Row(
                     children: [
