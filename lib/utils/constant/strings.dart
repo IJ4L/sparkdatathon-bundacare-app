@@ -24,6 +24,10 @@ class AppID {
   static const String galleryButton = 'Gallery';
   static const String hintTextfield = 'Ketik pesan...';
   static const String helperTextfield = 'Apa yang ingin kamu tanyakan?';
+  static const String waitText = 'Tunggu Sebentar ya';
+  static const String processText = 'Proses Scaning Berlangsung...';
+  static const String progressIDText = 'proses';
+  static const String progressText = 'Progress';
 }
 
 class AppIcon {

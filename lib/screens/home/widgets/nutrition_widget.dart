@@ -33,7 +33,7 @@ class NutritionSquareWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColor.primary.withValues(alpha: 0.8),
+              color: AppColor.primary.withValues(alpha: 0.25),
               borderRadius: BorderRadius.circular(6),
             ),
             child: CustomSvgPicture(

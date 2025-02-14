@@ -1,14 +1,14 @@
 import 'package:bundacare/screens/app_layout.dart';
-import 'package:bundacare/screens/camera/camera_preview.dart';
-import 'package:bundacare/screens/chat_page.dart';
-import 'package:bundacare/screens/detail_consuming_page.dart';
-import 'package:bundacare/screens/detail_education.dart';
-import 'package:bundacare/screens/detail_nutrition_page.dart';
-import 'package:bundacare/screens/education_page.dart';
-import 'package:bundacare/screens/home_page.dart';
-import 'package:bundacare/screens/login_page.dart';
-import 'package:bundacare/screens/profile_page.dart';
-import 'package:bundacare/screens/scan_page.dart';
+import 'package:bundacare/screens/scan/camera_preview.dart';
+import 'package:bundacare/screens/chat/chat_page.dart';
+import 'package:bundacare/screens/home/detail_consuming_page.dart';
+import 'package:bundacare/screens/education/detail_education.dart';
+import 'package:bundacare/screens/home/detail_nutrition_page.dart';
+import 'package:bundacare/screens/education/education_page.dart';
+import 'package:bundacare/screens/home/home_page.dart';
+import 'package:bundacare/screens/signin/login_page.dart';
+import 'package:bundacare/screens/profile/profile_page.dart';
+import 'package:bundacare/screens/scan/scan_page.dart';
 import 'package:bundacare/screens/splash_page.dart';
 import 'package:bundacare/utils/router/router_path.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +95,10 @@ final GoRouter router = GoRouter(
               path: RouterPath.scan,
               name: RouterPath.scan,
               pageBuilder: (context, state) {
-                return const NoTransitionPage(child: ScanPage());
+                var args = state.extra as Map<String, dynamic>;
+                return NoTransitionPage(
+                  child: ScanPage(image: args['image']),
+                );
               },
             ),
           ],

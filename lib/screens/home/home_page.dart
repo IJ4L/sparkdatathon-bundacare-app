@@ -1,7 +1,7 @@
 import 'package:bundacare/screens/widgets/bar_widget.dart';
-import 'package:bundacare/screens/widgets/consuming_widget.dart';
-import 'package:bundacare/screens/widgets/nav_detail_widget.dart';
-import 'package:bundacare/screens/widgets/nutrition_widget.dart';
+import 'package:bundacare/screens/home/widgets/consuming_widget.dart';
+import 'package:bundacare/screens/home/widgets/nav_detail_widget.dart';
+import 'package:bundacare/screens/home/widgets/nutrition_widget.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
@@ -20,19 +20,20 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             const CustomeBar(),
+            const SizedBox(height: 10),
             Stack(
               children: [
                 Container(
-                  height: 68,
+                  height: 76,
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: AppColor.primary.withValues(alpha: 0.04),
+                    color: AppColor.primary.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
                 Container(
-                  height: 68,
+                  height: 76,
                   width: MediaQuery.of(context).size.width * 0.55,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
@@ -41,15 +42,15 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 68,
+                  height: 76,
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 8,
+                    vertical: 14,
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
@@ -62,20 +63,19 @@ class HomePage extends StatelessWidget {
                               fontSize: AppTypographySize.body2,
                             ),
                           ),
-                          const SizedBox(height: 20),
                           Row(
                             children: [
                               const CustomSvgPicture(
                                 assetName: AppIcon.calenderIcon,
                                 color: AppColor.black,
-                                height: 18,
+                                height: 16,
                               ),
                               const SizedBox(width: 4),
                               Text(
                                 '12 Jan 25',
                                 style: AppTypography.light.copyWith(
                                   color: AppColor.black,
-                                  fontSize: AppTypographySize.body3,
+                                  fontSize: AppTypographySize.body4,
                                 ),
                               ),
                             ],

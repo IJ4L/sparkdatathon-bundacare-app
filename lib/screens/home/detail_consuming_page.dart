@@ -1,5 +1,5 @@
 import 'package:bundacare/screens/widgets/appbar_widget.dart';
-import 'package:bundacare/screens/widgets/nutrition_widget.dart';
+import 'package:bundacare/screens/home/widgets/nutrition_widget.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';

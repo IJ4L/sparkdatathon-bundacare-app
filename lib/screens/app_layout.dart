@@ -6,6 +6,7 @@ import 'package:bundacare/utils/constant/typography.dart';
 import 'package:bundacare/utils/router/router_path.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AppLayout extends StatelessWidget {
   const AppLayout({super.key, required this.navigationShell});
@@ -20,6 +21,25 @@ class AppLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ImagePicker picker = ImagePicker();
+
+    void takeImage(XFile image) {
+      context.goNamed(
+        RouterPath.scan,
+        extra: {'image': image},
+      );
+    }
+
+    Future<void> pickImageFromGallery() async {
+      final XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+      );
+
+      if (pickedFile != null) {
+        takeImage(pickedFile);
+      }
+    }
+
     final int selected = navigationShell.currentIndex;
     return Scaffold(
       body: navigationShell,
@@ -74,58 +94,75 @@ class AppLayout extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 44,
-                width: 44,
-                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.all(6),
+                margin: const EdgeInsets.only(bottom: 4),
                 decoration: BoxDecoration(
-                  color: AppColor.primary,
-                  borderRadius: BorderRadius.circular(22),
+                  color: AppColor.primary.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(100),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: AppColor.grey.withValues(alpha: 0.3),
+                  //     blurRadius: 12,
+                  //     offset: const Offset(0, 1),
+                  //   ),
+                  // ],
                 ),
-                child: IconButton(
-                  icon: const CustomSvgPicture(
-                    assetName: AppIcon.scanIcon,
-                    width: 20,
-                    height: 20,
-                    color: AppColor.white,
+                child: Container(
+                  height: 44,
+                  width: 44,
+                  decoration: BoxDecoration(
+                    color: AppColor.primary,
+                    borderRadius: BorderRadius.circular(22),
                   ),
-                  onPressed: () => {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          padding: const EdgeInsets.all(16),
-                          height: 200,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            color: AppColor.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              scanButton(
-                                title: AppID.cameraButton,
-                                icon: AppIcon.cameraIcon,
-                                onPressed: () {
-                                  context.goNamed(RouterPath.cameraPreview);
-                                  context.pop();
-                                },
-                              ),
-                              const SizedBox(width: 16),
-                              scanButton(
-                                title: AppID.galleryButton,
-                                icon: AppIcon.galleryIcon,
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                  child: IconButton(
+                    icon: const CustomSvgPicture(
+                      assetName: AppIcon.scanIcon,
+                      width: 20,
+                      height: 20,
+                      color: AppColor.white,
                     ),
-                  },
+                    onPressed: () => {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: const EdgeInsets.all(16),
+                            height: 200,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16),
+                                topRight: Radius.circular(16),
+                              ),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                scanButton(
+                                  title: AppID.cameraButton,
+                                  icon: AppIcon.cameraIcon,
+                                  onPressed: () {
+                                    context.goNamed(RouterPath.cameraPreview);
+                                    context.pop();
+                                  },
+                                ),
+                                const SizedBox(width: 16),
+                                scanButton(
+                                  title: AppID.galleryButton,
+                                  icon: AppIcon.galleryIcon,
+                                  onPressed: () {
+                                    pickImageFromGallery();
+                                    context.pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    },
+                  ),
                 ),
               ),
               Text(

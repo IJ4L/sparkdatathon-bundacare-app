@@ -1,6 +1,6 @@
 import 'package:bundacare/cubit/other_cubit.dart';
 import 'package:bundacare/screens/widgets/bar_widget.dart';
-import 'package:bundacare/screens/widgets/chat_widget.dart';
+import 'package:bundacare/screens/chat/widgets/chat_widget.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';

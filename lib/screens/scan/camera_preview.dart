@@ -44,6 +44,10 @@ class _CameraPreviewState extends State<CameraPreviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    void takeImage(XFile image) {
+      context.goNamed(RouterPath.scan, extra: {'image': image});
+    }
+
     return Scaffold(
       appBar: appbarWidget(context, 'Camera', () {
         context.goNamed(RouterPath.home);
@@ -76,13 +80,13 @@ class _CameraPreviewState extends State<CameraPreviewPage> {
                     backgroundColor: Colors.white,
                   ),
                   onPressed: () async {
-                    // try {
-                    //   await _initializeControllerFuture;
-                    //   // final image = await controller.takePicture();
-                    //   // context.goNamed(RouterPath.cameraResult, arguments: image.path);
-                    // } catch (e) {
-                      
-                    // }
+                    try {
+                      await _initializeControllerFuture;
+                      final image = await controller.takePicture();
+                      takeImage(image);
+                    } catch (e) {
+                      debugPrint(e.toString());
+                    }
                   },
                 ),
               ),
