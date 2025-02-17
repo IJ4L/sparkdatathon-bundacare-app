@@ -28,6 +28,15 @@ class AppID {
   static const String processText = 'Proses Scaning Berlangsung...';
   static const String progressIDText = 'proses';
   static const String progressText = 'Progress';
+  static const String logoutText = 'Logout';
+  static const String cancelText = 'Batal';
+  static const String exitText = 'Keluar';
+  static const String logoutTitle = 'Apakah anda yakin ingin keluar?';
+  static const String callText = 'Mr/Ms,';
+  static const String nikText = 'NIK ';
+  static const String sickHistoryText = 'Riwayat Penyakit';
+  static const String faqsText = 'FAQs';
+  static const String aboutText = 'Tentang Kami';
 }
 
 class AppIcon {

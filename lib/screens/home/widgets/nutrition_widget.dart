@@ -15,9 +15,13 @@ class NutritionSquareWidget extends StatelessWidget {
   const NutritionSquareWidget({
     super.key,
     required this.index,
+    required this.data,
+    this.satuan = 'g',
   });
 
   final int index;
+  final String data;
+  final String satuan;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class NutritionSquareWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '5432',
+                data,
                 style: AppTypography.medium.copyWith(
                   color: AppColor.black,
                   fontSize: AppTypographySize.body3,
@@ -63,7 +67,7 @@ class NutritionSquareWidget extends StatelessWidget {
               ),
               const SizedBox(width: 2),
               Text(
-                '/ 2000 Kkal',
+                ' $satuan          ',
                 style: AppTypography.light.copyWith(
                   color: AppColor.black,
                   fontSize: AppTypographySize.caption2,
@@ -81,16 +85,18 @@ class NutritionDetailSquareWidget extends StatelessWidget {
   const NutritionDetailSquareWidget({
     super.key,
     required this.index,
+    required this.data,
   });
 
   final int index;
+  final String data;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColor.primary.withValues(alpha: 0.1),
+        color: AppColor.primary.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -117,7 +123,7 @@ class NutritionDetailSquareWidget extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            '5432',
+            data,
             style: AppTypography.medium.copyWith(
               color: AppColor.black,
               fontSize: AppTypographySize.body1,
@@ -159,7 +165,7 @@ class NutritionBlocWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColor.primary.withValues(),
+              color: AppColor.primary.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(6),
             ),
             child: CustomSvgPicture(

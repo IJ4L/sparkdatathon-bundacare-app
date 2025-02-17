@@ -1,15 +1,56 @@
 import 'dart:io';
+import 'dart:async';
 
+import 'package:bundacare/cubit/predict/predict_cubit.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
+import 'package:bundacare/utils/router/router_path.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class ScanPage extends StatelessWidget {
+class ScanPage extends StatefulWidget {
   const ScanPage({super.key, required this.image});
 
   final XFile image;
+
+  @override
+  State<ScanPage> createState() => _ScanPageState();
+}
+
+class _ScanPageState extends State<ScanPage> {
+  double _progress = 0.0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    var file = File(widget.image.path);
+    context.read<PredictCubit>().predict(file);
+
+    _startLoading();
+  }
+
+  void _startLoading() {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        if (_progress < 1.0) {
+          _progress += 0.05;
+        } else {
+          _timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +83,7 @@ class ScanPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.45,
                 fit: BoxFit.cover,
-                File(image.path),
+                File(widget.image.path),
               ),
             ),
             const SizedBox(height: 16),
@@ -82,7 +123,7 @@ class ScanPage extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Mengkalkulasi Protein',
+                            'Mengkalkulasi',
                             style: AppTypography.semiBold.copyWith(
                               color: AppColor.black,
                               fontSize: AppTypographySize.body4,
@@ -90,7 +131,7 @@ class ScanPage extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            '87%',
+                            '${(_progress * 100).toStringAsFixed(0)}%',
                             style: AppTypography.semiBold.copyWith(
                               color: AppColor.black,
                               fontSize: AppTypographySize.body4,
@@ -101,17 +142,31 @@ class ScanPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: AppColor.grey.withValues(alpha: 0.3),
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppColor.primary,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                ),
+                BlocConsumer<PredictCubit, PredictState>(
+                  listener: (context, state) {
+                    if (state is PredictSuccess) {
+                      context.goNamed(
+                        RouterPath.resultPredict,
+                        extra: {
+                          'predict': state.predictModel,
+                        },
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return LinearProgressIndicator(
+                      value: _progress,
+                      backgroundColor: AppColor.grey.withValues(alpha: 0.3),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        AppColor.primary,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    );
+                  },
+                )
               ],
             )
           ],

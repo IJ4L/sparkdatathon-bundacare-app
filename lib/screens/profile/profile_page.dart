@@ -1,8 +1,13 @@
+import 'package:bundacare/cubit/sign_In/sign_in_cubit.dart';
 import 'package:bundacare/screens/profile/widgets/button_widget.dart';
 import 'package:bundacare/screens/widgets/bar_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
+import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
+import 'package:bundacare/utils/router/router_path.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -43,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Mr/Ms, ",
+                        AppID.callText,
                         style: AppTypography.light.copyWith(
                           fontSize: AppTypographySize.caption,
                           color: AppColor.primary,
@@ -62,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Nik ",
+                            AppID.nikText,
                             style: AppTypography.light.copyWith(
                               fontSize: AppTypographySize.body4,
                               color: AppColor.primary,
@@ -96,17 +101,17 @@ class ProfilePage extends StatelessWidget {
                 child: Wrap(
                   children: [
                     IconButtonCostume(
-                      title: 'Riwayat penyakit',
+                      title: AppID.sickHistoryText,
                       icon: Icons.file_present_outlined,
                       onPressed: () {},
                     ),
                     IconButtonCostume(
-                      title: 'FAQs',
+                      title: AppID.faqsText,
                       icon: Icons.help_outline,
                       onPressed: () {},
                     ),
                     IconButtonCostume(
-                      title: 'Tentang Kami',
+                      title: AppID.aboutText,
                       icon: Icons.info_outline,
                       onPressed: () {},
                     )
@@ -119,8 +124,71 @@ class ProfilePage extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        height: 170,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          color: AppColor.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 3,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: AppColor.grey.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              AppID.logoutTitle,
+                              style: AppTypography.regular.copyWith(
+                                color: AppColor.black,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ButtonWidget(
+                                    title: AppID.cancelText,
+                                    isOutline: false,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  const SizedBox(width: 16),
+                                  ButtonWidget(
+                                    title: AppID.exitText,
+                                    isOutline: false,
+                                    onPressed: () {
+                                      context.read<SignInCubit>().signOut();
+                                      context.goNamed(RouterPath.login);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
                 style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                   backgroundColor: AppColor.red,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -136,6 +204,43 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 30),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonWidget extends StatelessWidget {
+  final String title;
+  final VoidCallback onPressed;
+  final bool isOutline;
+
+  const ButtonWidget({
+    super.key,
+    required this.title,
+    required this.onPressed,
+    required this.isOutline,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        backgroundColor: isOutline ? AppColor.white : AppColor.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: isOutline ? AppColor.primary : AppColor.white,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Text(
+        title,
+        style: AppTypography.regular.copyWith(
+          color: Colors.white,
         ),
       ),
     );

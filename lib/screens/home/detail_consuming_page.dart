@@ -1,3 +1,4 @@
+import 'package:bundacare/data/models/nutrition_model.dart';
 import 'package:bundacare/screens/widgets/appbar_widget.dart';
 import 'package:bundacare/screens/home/widgets/nutrition_widget.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
@@ -7,7 +8,9 @@ import 'package:bundacare/utils/constant/typography.dart';
 import 'package:flutter/material.dart';
 
 class DetailConsumingPage extends StatelessWidget {
-  const DetailConsumingPage({super.key});
+  const DetailConsumingPage({super.key, required this.nutrition});
+
+  final Nutrition nutrition;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,11 @@ class DetailConsumingPage extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
-            decoration: const BoxDecoration(
-              color: AppColor.primary,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(nutrition.urlGambar),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -34,7 +40,7 @@ class DetailConsumingPage extends StatelessWidget {
             child: Wrap(
               children: [
                 Text(
-                  'Nasi Goreng',
+                  nutrition.namaMakanan,
                   style: AppTypography.medium.copyWith(
                     color: AppColor.black,
                     fontSize: AppTypographySize.body1,
@@ -70,19 +76,32 @@ class DetailConsumingPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          Container(
             height: 110,
-            width: MediaQuery.of(context).size.width,
-            child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemBuilder: (context, index) {
-                return NutritionDetailSquareWidget(index: index);
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(width: 16);
-              },
-              itemCount: 4,
+              children: [
+                NutritionDetailSquareWidget(
+                  index: 0,
+                  data: nutrition.kalori.toString(),
+                ),
+                const SizedBox(width: 10.0),
+                NutritionDetailSquareWidget(
+                  index: 1,
+                  data: nutrition.protein.toString(),
+                ),
+                const SizedBox(width: 10.0),
+                NutritionDetailSquareWidget(
+                  index: 2,
+                  data: nutrition.karbo.toString(),
+                ),
+                const SizedBox(width: 10.0),
+                NutritionDetailSquareWidget(
+                  index: 3,
+                  data: nutrition.lemak.toString(),
+                ),
+              ],
             ),
           ),
         ],

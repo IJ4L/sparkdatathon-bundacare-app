@@ -1,3 +1,4 @@
+import 'package:bundacare/cubit/sign_In/sign_in_cubit.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/screens/widgets/textfield_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
@@ -5,6 +6,7 @@ import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
 import 'package:bundacare/utils/router/router_path.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _nikController = TextEditingController();
-    _passwordController = TextEditingController();
+    _nikController = TextEditingController(text: '78123964');
+    _passwordController = TextEditingController(text: '1234');
     _formKey = GlobalKey<FormState>();
   }
 
@@ -36,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final SignInCubit signInCubit = context.read<SignInCubit>();
     return Scaffold(
       body: Column(
         children: [
@@ -95,26 +98,61 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: 48,
                     padding: const EdgeInsets.symmetric(horizontal: 18),
-                    child: TextButton(
-                      onPressed: () {
-                        // if (_formKey.currentState!.validate()) {
-                        //   // Do something
-                        // }
-                        context.goNamed(RouterPath.home);
+                    child: BlocConsumer<SignInCubit, SignInState>(
+                      listener: (context, state) {
+                        if (state is SignInSuccess) {
+                          context.go(RouterPath.home);
+                        } else if (state is SignInFailed) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                            ),
+                          );
+                        }
                       },
-                      style: TextButton.styleFrom(
-                        backgroundColor: AppColor.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        AppID.loginButton,
-                        style: AppTypography.semiBold.copyWith(
-                          color: AppColor.white,
-                          fontSize: AppTypographySize.body3,
-                        ),
-                      ),
+                      builder: (BuildContext context, SignInState state) {
+                        if (state is SignInLoading) {
+                          return TextButton(
+                            onPressed: null,
+                            style: TextButton.styleFrom(
+                              backgroundColor: AppColor.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                color: AppColor.white,
+                              ),
+                            ),
+                          );
+                        }
+                        return TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              signInCubit.signIn(
+                                _nikController.text,
+                                _passwordController.text,
+                              );
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColor.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Text(
+                            AppID.loginButton,
+                            style: AppTypography.regular.copyWith(
+                              color: AppColor.white,
+                              fontSize: AppTypographySize.body3,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

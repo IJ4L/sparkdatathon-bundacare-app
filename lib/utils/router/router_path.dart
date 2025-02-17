@@ -11,5 +11,6 @@ class RouterPath {
   static const String detailConsuming = '/detailConsuming';
   static const String detailEducation = '/detailEducation';
   static const String cameraPreview = '/cameraPreview';
+  static const String resultPredict = '/resultPredict';
   
 }

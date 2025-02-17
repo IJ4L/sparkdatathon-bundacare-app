@@ -6,6 +6,7 @@ import 'package:bundacare/screens/education/detail_education.dart';
 import 'package:bundacare/screens/home/detail_nutrition_page.dart';
 import 'package:bundacare/screens/education/education_page.dart';
 import 'package:bundacare/screens/home/home_page.dart';
+import 'package:bundacare/screens/scan/result_predict_page.dart';
 import 'package:bundacare/screens/signin/login_page.dart';
 import 'package:bundacare/screens/profile/profile_page.dart';
 import 'package:bundacare/screens/scan/scan_page.dart';
@@ -67,8 +68,11 @@ final GoRouter router = GoRouter(
                   path: RouterPath.detailConsuming,
                   name: RouterPath.detailConsuming,
                   pageBuilder: (context, state) {
-                    return const NoTransitionPage(
-                      child: DetailConsumingPage(),
+                    var args = state.extra as Map<String, dynamic>;
+                    return NoTransitionPage(
+                      child: DetailConsumingPage(
+                        nutrition: args['nutrition'],
+                      ),
                     );
                   },
                 ),
@@ -88,21 +92,10 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-        StatefulShellBranch(
-          navigatorKey: _shellNavigatorCKey,
-          routes: [
-            GoRoute(
-              path: RouterPath.scan,
-              name: RouterPath.scan,
-              pageBuilder: (context, state) {
-                var args = state.extra as Map<String, dynamic>;
-                return NoTransitionPage(
-                  child: ScanPage(image: args['image']),
-                );
-              },
-            ),
-          ],
-        ),
+        // StatefulShellBranch(
+        //   navigatorKey: _shellNavigatorCKey,
+        //   routes: [],
+        // ),
         StatefulShellBranch(
           navigatorKey: _shellNavigatorDKey,
           routes: [
@@ -139,10 +132,32 @@ final GoRouter router = GoRouter(
       ],
     ),
     GoRoute(
+      path: RouterPath.scan,
+      name: RouterPath.scan,
+      pageBuilder: (context, state) {
+        var args = state.extra as Map<String, dynamic>;
+        return NoTransitionPage(
+          child: ScanPage(image: args['image']),
+        );
+      },
+    ),
+    GoRoute(
       path: RouterPath.cameraPreview,
       name: RouterPath.cameraPreview,
       pageBuilder: (context, state) {
         return const NoTransitionPage(child: CameraPreviewPage());
+      },
+    ),
+    GoRoute(
+      path: RouterPath.resultPredict,
+      name: RouterPath.resultPredict,
+      pageBuilder: (context, state) {
+        var args = state.extra as Map<String, dynamic>;
+        return NoTransitionPage(
+          child: ResultPredictPage(
+            predict: args['predict'],
+          ),
+        );
       },
     ),
   ],

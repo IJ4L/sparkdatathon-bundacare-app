@@ -70,17 +70,17 @@ class AppLayout extends StatelessWidget {
           const SizedBox(),
           NavigationDestinantionCostume(
             selected: selected,
-            onPressed: () => _goBranch(3),
+            onPressed: () => _goBranch(2),
             title: AppID.bookButton,
             icon: AppIcon.bookIcon,
-            index: 3,
+            index: 2,
           ),
           NavigationDestinantionCostume(
             selected: selected,
-            onPressed: () => _goBranch(4),
+            onPressed: () => _goBranch(3),
             title: AppID.profileButton,
             icon: AppIcon.profileIcon,
-            index: 4,
+            index: 3,
           ),
         ],
       ),
@@ -99,13 +99,6 @@ class AppLayout extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColor.primary.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(100),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: AppColor.grey.withValues(alpha: 0.3),
-                  //     blurRadius: 12,
-                  //     offset: const Offset(0, 1),
-                  //   ),
-                  // ],
                 ),
                 child: Container(
                   height: 44,
@@ -136,25 +129,43 @@ class AppLayout extends StatelessWidget {
                                 topRight: Radius.circular(16),
                               ),
                             ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Column(
                               children: [
-                                scanButton(
-                                  title: AppID.cameraButton,
-                                  icon: AppIcon.cameraIcon,
-                                  onPressed: () {
-                                    context.goNamed(RouterPath.cameraPreview);
-                                    context.pop();
-                                  },
+                                Container(
+                                  height: 3,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.grey.withValues(alpha: 0.2),
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
                                 ),
-                                const SizedBox(width: 16),
-                                scanButton(
-                                  title: AppID.galleryButton,
-                                  icon: AppIcon.galleryIcon,
-                                  onPressed: () {
-                                    pickImageFromGallery();
-                                    context.pop();
-                                  },
+                                const SizedBox(height: 16),
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      scanButton(
+                                        title: AppID.cameraButton,
+                                        icon: AppIcon.cameraIcon,
+                                        onPressed: () {
+                                          context.goNamed(
+                                            RouterPath.cameraPreview,
+                                          );
+                                          context.pop();
+                                        },
+                                      ),
+                                      const SizedBox(width: 16),
+                                      scanButton(
+                                        title: AppID.galleryButton,
+                                        icon: AppIcon.galleryIcon,
+                                        onPressed: () {
+                                          pickImageFromGallery();
+                                          context.pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -168,7 +179,7 @@ class AppLayout extends StatelessWidget {
               Text(
                 AppID.scanButton,
                 style: AppTypography.regular.copyWith(
-                  color: selected == 2 ? AppColor.primary : AppColor.grey,
+                  color: selected == 21 ? AppColor.primary : AppColor.grey,
                 ),
               ),
               const SizedBox(height: 2),

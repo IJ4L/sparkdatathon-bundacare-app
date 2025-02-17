@@ -1,3 +1,4 @@
+import 'package:bundacare/cubit/chat/chat_cubit.dart';
 import 'package:bundacare/cubit/other_cubit.dart';
 import 'package:bundacare/screens/widgets/bar_widget.dart';
 import 'package:bundacare/screens/chat/widgets/chat_widget.dart';
@@ -43,18 +44,29 @@ class _ChatPageState extends State<ChatPage> {
           child: Column(
             children: [
               const CustomeBar(),
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: chat.length,
-                  itemBuilder: (context, index) {
-                    return ChatWidget(chat: chat[index]);
-                  },
-                ),
+              BlocBuilder<ChatCubit, ChatState>(
+                builder: (context, state) {
+                  if (state is ChatInitial) {
+                    return const Expanded(child: Center());
+                  } else if (state is ChatLoaded) {
+                    return Expanded(
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: state.chats.length,
+                        itemBuilder: (context, index) {
+                          return ChatWidget(
+                            chat: state.chats[index],
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Expanded(child: SizedBox());
+                  }
+                },
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 28),
                 child: Center(
                   child: TextFormField(
                     controller: _chatController,
@@ -85,7 +97,21 @@ class _ChatPageState extends State<ChatPage> {
                                 ),
                                 padding: const EdgeInsets.all(2),
                               ),
-                              onPressed: state ? () {} : null,
+                              onPressed: state
+                                  ? () {
+                                      context
+                                          .read<ChatCubit>()
+                                          .getChats(_chatController.text);
+                                      _chatController.clear();
+                                      _scrollController.animateTo(
+                                        _scrollController
+                                            .position.maxScrollExtent,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeOut,
+                                      );
+                                    }
+                                  : null,
                             ),
                           );
                         },

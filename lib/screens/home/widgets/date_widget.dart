@@ -1,3 +1,4 @@
+import 'package:bundacare/cubit/nutrition_by_date/nutritionbydate_cubit.dart';
 import 'package:bundacare/cubit/other_cubit.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/typography.dart';
@@ -23,6 +24,11 @@ class DateWidget extends StatelessWidget {
       child: IconButton(
         onPressed: () {
           context.read<DateCubit>().changeDate(index);
+          var data = context.read<DateCubit>().state;
+          debugPrint('2025-${DateTime.now().month}-$data');
+          context.read<NutritionbydateCubit>().getNutritionByDate(
+                '2025-0${DateTime.now().month}-$data',
+              );
         },
         style: IconButton.styleFrom(
           backgroundColor: state == index ? AppColor.primary : AppColor.white,

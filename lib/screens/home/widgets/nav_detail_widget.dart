@@ -7,11 +7,14 @@ import 'package:flutter/material.dart';
 class NavDetailWidget extends StatelessWidget {
   const NavDetailWidget({
     super.key,
-    required this.title, required this.onPressed,
+    required this.title,
+    required this.onPressed,
+    required this.isOn,
   });
 
   final String title;
   final Function()? onPressed;
+  final bool isOn;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +54,13 @@ class NavDetailWidget extends StatelessWidget {
                       Text(
                         AppID.seeDetailText,
                         style: AppTypography.light.copyWith(
-                          color: AppColor.black,
+                          color: isOn ? AppColor.white : AppColor.black,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const CustomSvgPicture(
+                      CustomSvgPicture(
                         assetName: AppIcon.arrowIcon,
-                        color: AppColor.black,
+                        color: isOn ? AppColor.white : AppColor.black,
                       ),
                     ],
                   ),

@@ -1,3 +1,4 @@
+import 'package:bundacare/data/models/nutrition_model.dart';
 import 'package:bundacare/screens/widgets/picture_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
@@ -9,10 +10,10 @@ import 'package:go_router/go_router.dart';
 class ConsumingWidget extends StatelessWidget {
   const ConsumingWidget({
     super.key,
-    required this.index,
+    required this.nutrition,
   });
 
-  final int index;
+  final Nutrition nutrition;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,9 @@ class ConsumingWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: IconButton(
         onPressed: () {
-          context.pushNamed(RouterPath.detailConsuming);
+          context.pushNamed(RouterPath.detailConsuming, extra: {
+            'nutrition': nutrition,
+          });
         },
         style: IconButton.styleFrom(
           backgroundColor: AppColor.white,
@@ -36,10 +39,8 @@ class ConsumingWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColor.primary,
                 borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                    "https://cdn1-production-images-kly.akamaized.net/LDRjBxjUH3gyrzEAUFrCi_XisTs=/0x148:1920x1230/800x450/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3093328/original/069244600_1585909700-fried-2509089_1920.jpg",
-                  ),
+                image: DecorationImage(
+                  image: NetworkImage(nutrition.urlGambar),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -58,10 +59,14 @@ class ConsumingWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Nasi Goreng',
-                          style: AppTypography.medium.copyWith(
-                            color: AppColor.black,
+                        SizedBox(
+                          width: 180,
+                          child: Text(
+                            nutrition.namaMakanan,
+                            style: AppTypography.medium.copyWith(
+                              color: AppColor.black,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                         Row(
@@ -72,7 +77,7 @@ class ConsumingWidget extends StatelessWidget {
                               color: AppColor.grey,
                             ),
                             Text(
-                              '16 Min',
+                              nutrition.id.toString(),
                               style: AppTypography.medium.copyWith(
                                 color: AppColor.grey,
                                 fontSize: AppTypographySize.caption,
@@ -84,21 +89,29 @@ class ConsumingWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    height: 20,
-                    width: MediaQuery.of(context).size.width * 0.62,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return icon(nutritionIcon[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 4);
-                      },
-                      itemCount: nutritionIcon.length,
-                    ),
-                  )
+                  Row(
+                    children: [
+                      icon(
+                        AppIcon.caloryIcon,
+                        nutrition.kalori.toString(),
+                      ),
+                      const SizedBox(width: 4),
+                      icon(
+                        AppIcon.proteinIcon,
+                        nutrition.protein.toString(),
+                      ),
+                      const SizedBox(width: 4),
+                      icon(
+                        AppIcon.fatIcon,
+                        nutrition.lemak.toString(),
+                      ),
+                      const SizedBox(width: 4),
+                      icon(
+                        AppIcon.carbohydrateIcon,
+                        nutrition.karbo.toString(),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -108,7 +121,7 @@ class ConsumingWidget extends StatelessWidget {
     );
   }
 
-  Row icon(String assetName) {
+  Row icon(String assetName, String value) {
     return Row(
       children: [
         CustomSvgPicture(
@@ -117,7 +130,7 @@ class ConsumingWidget extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         Text(
-          '20 kg',
+          '$value kg',
           style: AppTypography.light.copyWith(
             color: AppColor.black,
             fontSize: AppTypographySize.caption,

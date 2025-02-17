@@ -1,12 +1,13 @@
+import 'package:bundacare/cubit/nutrition_by_date/nutritionbydate_cubit.dart';
 import 'package:bundacare/cubit/other_cubit.dart';
-import 'package:bundacare/screens/widgets/appbar_widget.dart';
 import 'package:bundacare/screens/home/widgets/consuming_widget.dart';
+import 'package:bundacare/screens/widgets/appbar_widget.dart';
 import 'package:bundacare/screens/home/widgets/date_widget.dart';
 import 'package:bundacare/screens/home/widgets/nutrition_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
-import 'package:bundacare/utils/formatter/function.dart';
+import 'package:bundacare/utils/formatter/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,13 @@ class _DetailNutritionPageState extends State<DetailNutritionPage> {
     super.initState();
     context.read<DateCubit>().changeDate(DateTime.now().day);
     _scrollController = ScrollController();
+
+    var data = context.read<DateCubit>().state;
+    var month = DateTime.now().month;
+
+    context.read<NutritionbydateCubit>().getNutritionByDate(
+          '2025-0$month-$data',
+        );
   }
 
   @override
@@ -102,42 +110,39 @@ class _DetailNutritionPageState extends State<DetailNutritionPage> {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: NutritionBlocWidget(index: index),
-                  );
-                },
-                childCount: 4,
-              ),
-            ),
-            // SliverToBoxAdapter(
-            //   child: SizedBox(
-            //     height: MediaQuery.of(context).size.height * 0.32,
-            //     child: ListView.separated(
-            //       physics: const NeverScrollableScrollPhysics(),
-            //       itemBuilder: (context, index) {
-
-            //       },
-            //       separatorBuilder: (context, index) {
-            //         return const SizedBox(height: 8);
-            //       },
-            //       itemCount: nutritionIcon.length,
-            //     ),
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate(
+            //     (context, index) {
+            //       return Padding(
+            //         padding: const EdgeInsets.symmetric(vertical: 5),
+            //         child: NutritionBlocWidget(index: index),
+            //       );
+            //     },
+            //     childCount: 4,
             //   ),
             // ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: ConsumingWidget(index: index),
+            BlocBuilder<NutritionbydateCubit, NutritionbydateState>(
+              builder: (context, state) {
+                if (state is NutritionbydateLoaded) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: ConsumingWidget(
+                            nutrition: state.nutritionModel.nutritions[index],
+                          ),
+                        );
+                      },
+                      childCount: state.nutritionModel.nutritions.length,
+                    ),
                   );
-                },
-                childCount: 10,
-              ),
+                } else {
+                  return const SliverToBoxAdapter(
+                    child: SizedBox(height: 20),
+                  );
+                }
+              },
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 20),
