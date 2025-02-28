@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final chatModel = chatModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ChatModel chatModelFromJson(String str) => ChatModel.fromJson(json.decode(str));

@@ -18,7 +18,6 @@ import 'package:go_router/go_router.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
 final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
-final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
 final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellE');
 final _shellNavigatorEKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 
