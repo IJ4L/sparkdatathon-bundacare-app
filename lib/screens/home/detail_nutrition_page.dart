@@ -3,7 +3,6 @@ import 'package:bundacare/cubit/other_cubit.dart';
 import 'package:bundacare/screens/home/widgets/consuming_widget.dart';
 import 'package:bundacare/screens/widgets/appbar_widget.dart';
 import 'package:bundacare/screens/home/widgets/date_widget.dart';
-import 'package:bundacare/screens/home/widgets/nutrition_widget.dart';
 import 'package:bundacare/utils/constant/colors.dart';
 import 'package:bundacare/utils/constant/strings.dart';
 import 'package:bundacare/utils/constant/typography.dart';
